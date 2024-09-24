@@ -1,7 +1,7 @@
-package com.kamiloses.inventoryservice.service;
+package com.kamiloses.productservice.service;
 
-import com.kamiloses.inventoryservice.dto.ProductDto;
-import com.kamiloses.inventoryservice.repository.ProductRepository;
+import com.kamiloses.productservice.dto.ProductDto;
+import com.kamiloses.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,11 +21,11 @@ private final Mapper mapper;
 
 }
 
-    public Mono<ProductDto> getProductByName(String name) {
-        return productRepository.getProductsByName(name)
-                .map(mapper::productEntityToDto)
-                .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found with name: " + name)));
-    }
+//    public Mono<ProductDto> getProductByName(String name) {
+//        return productRepository.getProductsByName(name)
+//                .map(mapper::productEntityToDto)
+//                .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found with name: " + name)));
+//    }
 
 
 }

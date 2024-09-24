@@ -1,5 +1,6 @@
 package com.kamiloses.inventoryservice.entity;
 
+import com.kamiloses.inventoryservice.EventType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -17,9 +18,12 @@ public class InventoryEvent {
     @DBRef
     private Inventory inventory;
        // todo uzyj potem convertera by to była w stringu data
-    private LocalDateTime eventTime;
-    private String eventType;
-    private Integer quantityChange;
+    private String eventTime;
+    private EventType eventType;
+    private Integer quantity;
     private String description;
+
+    @DBRef
+    private Supplier supplier;
 
 }

@@ -1,15 +1,15 @@
-package com.kamiloses.inventoryservice.service;
+package com.kamiloses.productservice.service;
 
-import com.kamiloses.inventoryservice.dto.ProductDto;
-import com.kamiloses.inventoryservice.entity.Product;
+import com.kamiloses.productservice.dto.ProductDto;
+import com.kamiloses.productservice.entity.Product;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 @Component
 public class Mapper {
 
     protected ProductDto productEntityToDto(Product product) {
         ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setManufacturer(product.getManufacturer());
         productDto.setModel(product.getModel());
@@ -22,6 +22,5 @@ public class Mapper {
         productDto.setPrice(product.getPrice());
         return productDto;
     }
-
 
 }

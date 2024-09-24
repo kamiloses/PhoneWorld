@@ -1,7 +1,6 @@
-package com.kamiloses.inventoryservice.repository;
+package com.kamiloses.productservice.repository;
 
-import com.kamiloses.inventoryservice.dto.ProductDto;
-import com.kamiloses.inventoryservice.entity.Product;
+import com.kamiloses.productservice.entity.Product;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 

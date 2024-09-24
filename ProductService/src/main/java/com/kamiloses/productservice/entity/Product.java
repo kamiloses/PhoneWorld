@@ -1,5 +1,6 @@
-package com.kamiloses.inventoryservice.entity;
+package com.kamiloses.productservice.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -26,6 +28,6 @@ public class Product {
     private Integer storageCapacity;
     private Double price;
 
-   @Transient// @OneToOne(mappedBy)
-    private Inventory inventory;
+    //  @Transient// @OneToOne(mappedBy)
+    //private Inventory inventory;
 }

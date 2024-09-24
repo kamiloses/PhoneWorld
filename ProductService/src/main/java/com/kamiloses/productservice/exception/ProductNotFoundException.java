@@ -1,4 +1,4 @@
-package com.kamiloses.inventoryservice.service;
+package com.kamiloses.productservice.exception;
 
 public class ProductNotFoundException extends RuntimeException{
 

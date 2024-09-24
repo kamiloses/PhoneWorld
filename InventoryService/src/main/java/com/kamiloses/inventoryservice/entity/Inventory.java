@@ -3,11 +3,8 @@ package com.kamiloses.inventoryservice.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 
 @Document
 @Data
@@ -16,8 +13,8 @@ public class Inventory {
     @Id
     private String id;
 
-   @DBRef
-    private Product product;
+   //@DBRef
+    private String productId;
 
     private Integer availableQuantity;
     private Integer reservedQuantity;
