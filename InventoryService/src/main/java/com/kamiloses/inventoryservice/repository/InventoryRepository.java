@@ -10,4 +10,6 @@ import java.util.List;
 public interface InventoryRepository extends ReactiveMongoRepository<Inventory, String> {
 
     Flux<Inventory> findByProductIdIn(List<String> productIds);
+    Mono<Inventory> findByProductId(String productId);
+
 }

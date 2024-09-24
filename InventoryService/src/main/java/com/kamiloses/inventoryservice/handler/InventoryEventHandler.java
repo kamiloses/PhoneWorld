@@ -1,6 +1,6 @@
 package com.kamiloses.inventoryservice.handler;
 
-import com.kamiloses.inventoryservice.service.InventoryEventDto;
+import com.kamiloses.inventoryservice.dto.InventoryEventDto;
 import com.kamiloses.inventoryservice.service.InventoryEventService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;

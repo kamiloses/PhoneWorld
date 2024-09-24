@@ -1,10 +1,8 @@
-package com.kamiloses.inventoryservice.service;
+package com.kamiloses.inventoryservice.dto;
 
-import com.kamiloses.inventoryservice.entity.Inventory;
 import com.kamiloses.inventoryservice.entity.Supplier;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDateTime;
 
