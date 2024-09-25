@@ -56,10 +56,13 @@ public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEvent
                 inventoryEvent.setInventory(inventory);
                 inventoryEvent.setEventTime(new Date().toString());
                 inventoryEvent.setEventType(EventType.DELIVERED);
-                inventoryEvent.setQuantity(inventory.getAvailableQuantity() + inventoryEventDto.getQuantityChange());
+                inventoryEvent.setQuantity(inventoryEventDto.getQuantityChange());
                 inventoryEvent.setDescription(inventoryEventDto.getDescription());
                 inventoryEvent.setSupplier(supplierService.setSupplierRelatedWithEvent());
                 System.out.println("zapisało2"+inventory);
+
+                inventory.setAvailableQuantity(inventoryEventDto.getQuantityChange()+inventoryEvent.getQuantity());
+                inventoryRepository.save(inventory).subscribe();
                 return inventoryEventRepository.save(inventoryEvent)
                         .thenReturn(inventoryEvent);
             })
