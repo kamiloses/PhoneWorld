@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class ResponseProductInfo {
 
     private String productName;
-
+    private Integer quantity;
     private Double pricePerUnit;
 
 }

@@ -1,11 +1,23 @@
 package com.kamiloses.productservice.service;
 
 import com.kamiloses.productservice.dto.ProductDto;
+import com.kamiloses.productservice.dto.ResponseInventoryInfo;
+import com.kamiloses.productservice.dto.ResponseProductInfo;
 import com.kamiloses.productservice.entity.Product;
+import com.kamiloses.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @Component
 public class Mapper {
+
+    private final ProductRepository productRepository;
+
+    public Mapper(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     protected ProductDto productEntityToDto(Product product) {
         ProductDto productDto = new ProductDto();
@@ -22,5 +34,20 @@ public class Mapper {
         productDto.setPrice(product.getPrice());
         return productDto;
     }
+    public Flux<ResponseInventoryInfo> productInfoToInventoryInfo(List<ResponseProductInfo> responseProductInfoList) {
+        return Flux.fromIterable(responseProductInfoList)
+                .flatMap(productInfo ->
+                        productRepository.getProductsByName(productInfo.getProductName())
+                                .map(product -> {
+                                    ResponseInventoryInfo responseInventoryInfo = new ResponseInventoryInfo();
+                                    responseInventoryInfo.setProductId(product.getId());
+                                    responseInventoryInfo.setProductName(productInfo.getProductName());
+                                    responseInventoryInfo.setProductQuantity(productInfo.getQuantity());
+                                    return responseInventoryInfo;
+                                })
+                );
+    }
+
+
 
 }

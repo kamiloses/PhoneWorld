@@ -36,6 +36,7 @@ return order;    }
     return     orderItemDto.stream().map(order->{
             ResponseProductInfo responseProduct = new ResponseProductInfo();
              responseProduct.setProductName(order.getProductName());
+             responseProduct.setQuantity(order.getQuantity());
              responseProduct.setPricePerUnit(null);
         return responseProduct;}).toList();
 

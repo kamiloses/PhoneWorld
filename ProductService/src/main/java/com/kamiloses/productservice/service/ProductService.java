@@ -43,7 +43,11 @@ public class ProductService {
                                     }
                                     ResponseProductInfo responseProductInfo = new ResponseProductInfo();
                                     responseProductInfo.setProductName(productInfo.getProductName());
-                                    responseProductInfo.setPricePerUnit(phone.getPrice());
+                                    responseProductInfo.setQuantity(productInfo.getQuantity());
+                                    responseProductInfo.setPricePerUnit(productInfo.getPricePerUnit());
+                                    System.err.println(productInfo.getProductName());
+                                    System.err.println(productInfo.getQuantity());
+                                    System.err.println(productInfo.getPricePerUnit());
                                     return Mono.just(responseProductInfo);
                                 })
                 )

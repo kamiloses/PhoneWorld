@@ -3,6 +3,7 @@ package com.kamiloses.inventoryservice.service;
 import com.kamiloses.inventoryservice.EventType;
 import com.kamiloses.inventoryservice.dto.InventoryEventDto;
 import com.kamiloses.inventoryservice.dto.ProductGetDto;
+import com.kamiloses.inventoryservice.dto.ResponseInventoryInfo;
 import com.kamiloses.inventoryservice.entity.Inventory;
 import com.kamiloses.inventoryservice.entity.InventoryEvent;
 import com.kamiloses.inventoryservice.repository.InventoryEventRepository;
@@ -95,21 +96,12 @@ public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEvent
     }
 
 
-//    @PostConstruct
-//    private void findInventoryByNamex() {
-//        String name = "Smartphone X";
-//        Mono<Inventory> phoneId = webClient.get()
-//                .uri("/api/products")
-//                .retrieve()
-//                .bodyToFlux(ProductGetDto.class)
-//                .filter(product -> product.getName().equals("Smartphone X"))
-//                .map(ProductGetDto::getId)
-//                .single()
-//                .switchIfEmpty(Mono.error(new PhoneNotFoundException("This phone was not found")))
-//                .flatMap(inventoryRepository::findByProductId);
-//        System.out.println("komunikat"+phoneId.block());
-//
-//    }
+
+   // private  Mono<Void> updateInventoryEvent(List<Enve>)
+
+
+
+
 
 
 }
