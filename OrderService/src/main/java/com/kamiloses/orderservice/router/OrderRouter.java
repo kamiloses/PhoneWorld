@@ -18,6 +18,6 @@ public class OrderRouter {
 
     @Bean
     public RouterFunction<ServerResponse> routerFunction(OrderHandler orderHandler) {
-        return RouterFunctions.route().POST("/api/createAccount", orderHandler::makeAnOrder).build();
+        return RouterFunctions.route().POST("/api/MakeOrder", orderHandler::makeAnOrder).build();
     }
 }

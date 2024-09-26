@@ -2,6 +2,7 @@ package com.kamiloses.orderservice.service;
 
 import com.kamiloses.orderservice.dto.MakeAnOrderDto;
 import com.kamiloses.orderservice.dto.OrderItemDto;
+import com.kamiloses.orderservice.dto.ResponseProductInfo;
 import com.kamiloses.orderservice.entity.Order;
 import com.kamiloses.orderservice.entity.OrderItem;
 import com.kamiloses.orderservice.entity.OrderStatus;
@@ -27,10 +28,27 @@ return order;    }
                     OrderItem orderItem = new OrderItem();
                     orderItem.setProductName(item.getProductName());
                     orderItem.setQuantity(item.getQuantity());
-                    orderItem.setPrice(100.0);
                     return orderItem;
                 }).toList();
     }
 
+    List<ResponseProductInfo> OrderItemDtoToResponseProductInfo(List<OrderItemDto> orderItemDto) {
+    return     orderItemDto.stream().map(order->{
+            ResponseProductInfo responseProduct = new ResponseProductInfo();
+             responseProduct.setProductName(order.getProductName());
+             responseProduct.setPricePerUnit(null);
+        return responseProduct;}).toList();
+
+    }
+    List<OrderItem> responseProductInfoToOrderItem(List<ResponseProductInfo> responseProductInfoList){
+    return     responseProductInfoList.stream().map(item-> {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setProductName(item.getProductName());
+                    orderItem.setQuantity(1000);
+                    orderItem.setPricePerUnit(item.getPricePerUnit());
+                return orderItem;
+                }).toList();
+
+    }
 
 }

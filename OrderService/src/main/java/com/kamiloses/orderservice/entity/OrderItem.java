@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class OrderItem {
     private String productName;
     private Integer quantity;
-    private Double price;
+    private Double pricePerUnit;
 
 
 }
