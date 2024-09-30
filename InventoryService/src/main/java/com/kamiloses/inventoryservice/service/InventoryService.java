@@ -17,6 +17,9 @@ public class InventoryService {
     }
 
     public Mono<Void> responseIfProductAvailable(List<ResponseInventoryInfo> responseInventoryInfoList) {
+        for (ResponseInventoryInfo responseInventoryInfo : responseInventoryInfoList) {
+            System.out.println("response"+responseInventoryInfo);
+        }
         return Flux.fromIterable(responseInventoryInfoList)
                 .flatMap(product -> inventoryRepository.findByProductId(product.getProductId())
                         .flatMap(inventory -> {

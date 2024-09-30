@@ -19,12 +19,12 @@ public class RabbitMQConsumer {
  @RabbitListener(queues = RabbitMQConfig.QUEUE_PRODUCT_TO_ORDER)
     public void receiveMessage(List<ResponseProductInfo> responseProductInfoList) {
         log.info("Received message from product service: {}", responseProductInfoList);
-
+     System.err.println(responseProductInfoList);
         this.responseProductInfoList = responseProductInfoList;
     }
 
  public List<ResponseProductInfo> getModifiedResponseFromProductService(){
-
+     System.out.println(responseProductInfoList);
         return responseProductInfoList;
  }
 

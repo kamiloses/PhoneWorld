@@ -30,13 +30,19 @@ private final RabbitMQConsumer rabbitMQConsumer;
  //   PATCH /api/orders/{orderId}/status – Aktualizacja statusu zamówienia
  //   GET /api/orders pobieranie moich zamówień
 
-
     public Mono<Void> makeAnOrder(MakeAnOrderDto makeAnOrderDto) {
-         rabbitMQProducer.sendMessage(mapper.OrderItemDtoToResponseProductInfo(makeAnOrderDto.getOrderItems()));
-        List<ResponseProductInfo> modifiedResponseFromProductService = rabbitMQConsumer.getModifiedResponseFromProductService();
+        List<ResponseProductInfo> requestForProductPrice= mapper.OrderItemDtoToResponseProductInfo(makeAnOrderDto.getOrderItems());
+        rabbitMQProducer.sendMessageToProductService(requestForProductPrice);
+        List<ResponseProductInfo> responseFromProductService = rabbitMQConsumer.getModifiedResponseFromProductService();
+        //request and response about product price
+
         Order order = mapper.makeAnOrderDtoToOrder(makeAnOrderDto);
-        List<OrderItem> modifiedOrderItems = mapper.responseProductInfoToOrderItem(modifiedResponseFromProductService);
-        order.setOrderItems(modifiedOrderItems);
+        System.err.println("Wynik"+responseFromProductService);
+        order.setOrderItems(mapper.responseProductInfoToOrderItem(responseFromProductService));
+        System.out.println("Wynik"+order);
+
+
+
         return orderRepository.save(order).then();
 
     }

@@ -24,14 +24,18 @@ public class RabbitMQProducer {
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_MAKING_ORDER, RabbitMQConfig.ROUTING_KEY_PRODUCT_TO_ORDER, responseForProductsFromProductService);
         return Mono.empty();
     }
-    public Mono<Void> sendMessageToInventory(Mono<List<ResponseInventoryInfo>> responseForInventoryDetails) {
 
-        return responseForInventoryDetails.flatMap(inventoryDetails -> {
-            System.out.println("abcds"+inventoryDetails);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_MAKING_ORDER,
+
+    public void sendMessageToInventory(List<ResponseInventoryInfo> responseForInventoryDetails) {
+        System.out.println("lista "+responseForInventoryDetails);
+        ResponseInventoryInfo responseInventoryInfo = new ResponseInventoryInfo();
+        responseInventoryInfo.setProductId("100");
+        responseInventoryInfo.setProductName("Smartphone X");
+        responseInventoryInfo.setProductQuantity(1);
+
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_MAKING_ORDER,
                     RabbitMQConfig.ROUTING_KEY_PRODUCT_TO_INVENTORY,
-                    inventoryDetails);
-            return Mono.empty();
-        });
+                    responseInventoryInfo);
+
     }
 }

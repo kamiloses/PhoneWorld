@@ -20,7 +20,6 @@ public class Inventory {
     private String productId;
 
     private Integer availableQuantity;
-    private Integer reservedQuantity;
     private Integer soldQuantity;
 
   //  @OneToMany(mappedBy = "inventory")

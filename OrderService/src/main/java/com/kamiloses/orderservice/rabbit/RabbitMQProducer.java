@@ -17,9 +17,8 @@ public class RabbitMQProducer {
     public RabbitMQProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
-
-    public void sendMessage(List<ResponseProductInfo> responseForProductsFromProductService) {
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_MAKING_ORDER, RabbitMQConfig.ROUTING_KEY_ORDER_TO_PRODUCT, responseForProductsFromProductService);
-        log.info("Sent message: {}", responseForProductsFromProductService);
+    public void sendMessageToProductService(List<ResponseProductInfo> requestForProductPrice) {
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_MAKING_ORDER, RabbitMQConfig.ROUTING_KEY_ORDER_TO_PRODUCT, requestForProductPrice);
+        log.info("Sent message: {}", requestForProductPrice);
     }
 }

@@ -33,7 +33,7 @@ public class ProductService {
 //                .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found with name: " + name)));
 //    }
 
-    public Mono<List<ResponseProductInfo>> modifyProductResponse(List<ResponseProductInfo> responseProductInfoList) {
+    public Mono<List<ResponseProductInfo>> getProductPrice(List<ResponseProductInfo> responseProductInfoList) {
         return Flux.fromIterable(responseProductInfoList)
                 .flatMap(productInfo ->
                         productRepository.getProductsByName(productInfo.getProductName())
@@ -44,10 +44,10 @@ public class ProductService {
                                     ResponseProductInfo responseProductInfo = new ResponseProductInfo();
                                     responseProductInfo.setProductName(productInfo.getProductName());
                                     responseProductInfo.setQuantity(productInfo.getQuantity());
-                                    responseProductInfo.setPricePerUnit(productInfo.getPricePerUnit());
+                                    responseProductInfo.setPricePerUnit(phone.getPrice());
                                     System.err.println(productInfo.getProductName());
                                     System.err.println(productInfo.getQuantity());
-                                    System.err.println(productInfo.getPricePerUnit());
+                                    System.err.println(phone.getPrice());
                                     return Mono.just(responseProductInfo);
                                 })
                 )
