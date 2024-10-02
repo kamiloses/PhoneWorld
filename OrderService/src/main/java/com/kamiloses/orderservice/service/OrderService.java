@@ -30,7 +30,8 @@ public class OrderService {
 
 
     public Mono<Void> makeAnOrder(MakeAnOrderDto makeAnOrderDto) {
-        Double accountBalance = RestClient.create().get().uri("http://localhost:8083").retrieve().body(double.class);
+        Double accountBalance = RestClient.create().get().uri("http://host.docker.internal:8083").retrieve().body(double.class);
+        System.out.println("test "+accountBalance);
         //fetching accountBalance from userService
 
         List<ResponseProductInfo> requestForProductPrice = mapper.OrderItemDtoToResponseProductInfo(makeAnOrderDto.getOrderItems(), accountBalance);

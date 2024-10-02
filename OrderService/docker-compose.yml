@@ -1,0 +1,48 @@
+version: '3'
+services:
+  order-service:
+    build: ./
+    environment:
+      OTEL_SERVICE_NAME: "order-service"
+      OTEL_TRACES_EXPORTER: "jaeger,zipkin,logging"
+      OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
+      OTEL_EXPORTER_ZIPKIN_ENDPOINT: "http://zipkin:9411/api/v2/spans"
+      SPRING_DATA_MONGODB_URI: "mongodb://mongo:27017/order-service"
+      OTEL_LOGS_EXPORTER: "logging"
+      OTEL_METRICS_EXPORTER: "logging"
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongo
+      - jaeger-all-in-one
+      - zipkin-all-in-one
+
+  zipkin-all-in-one:
+    container_name: zipkin
+    image: openzipkin/zipkin:latest
+    restart: always
+    ports:
+      - "9411:9411"
+
+  jaeger-all-in-one:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    restart: always
+    ports:
+      - "16686:16686"
+      - "14250"
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"  # Poprawiony port
+    environment:
+      MONGO_INITDB_DATABASE: order-service
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

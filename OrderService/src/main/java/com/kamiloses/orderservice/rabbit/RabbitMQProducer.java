@@ -1,7 +1,6 @@
 package com.kamiloses.orderservice.rabbit;
 
 import com.kamiloses.orderservice.dto.ResponseProductInfo;
-import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

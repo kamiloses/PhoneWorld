@@ -1,13 +1,13 @@
 package com.kamiloses.orderservice;
 
-import com.kamiloses.rabbitmqconfig.RabbitConverter;
-import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
+import com.kamiloses.orderservice.rabbit.RabbitConverter;
+import com.kamiloses.orderservice.rabbit.RabbitMQConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({RabbitMQConfig.class, RabbitConverter.class})
+//@Import({RabbitMQConfig.class, RabbitConverter.class})
 public class OrderServiceApplication {
 
     public static void main(String[] args) {
