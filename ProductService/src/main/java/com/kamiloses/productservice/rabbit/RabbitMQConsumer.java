@@ -8,6 +8,7 @@ import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -31,12 +32,13 @@ public class RabbitMQConsumer {
     public void receiveMessage(List<ResponseProductInfo> responseProductInfo) {
 
 
-                productService.getProductPrice(responseProductInfo).block();
+        List<ResponseProductInfo> products = productService.getProductPrice(responseProductInfo).block();
+        System.out.println("wszystko "+products);
 
+        rabbitMQProducer.sendMessageToInventory(mapper.productInfoToInventoryInfo(products));
 
-
-      //  Mono<List<ResponseInventoryInfo>> requestToInventoryModule = mapper.productInfoToInventoryInfo(responseProductInfo).collectList();
-
+//          Mono<List<ResponseInventoryInfo>> requestToInventoryModule = mapper.productInfoToInventoryInfo(responseProductInfo).collectList();
+//
 //        rabbitMQProducer.sendMessageToInventory(requestToInventoryModule.block());
 //        productService.modifyProductResponse(responseProductInfo)
 //                .flatMap(rabbitMQProducer::sendMessage).subscribe();

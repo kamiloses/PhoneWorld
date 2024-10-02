@@ -10,5 +10,6 @@ public class ResponseInventoryInfo {
     private String productId;
     private String productName;
     private Integer productQuantity;
+    private Double userAccountBalance;
 
 }

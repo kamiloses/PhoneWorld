@@ -1,4 +1,4 @@
-package com.kamiloses.userservice.entity;
+package com.kamiloses.userservice;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

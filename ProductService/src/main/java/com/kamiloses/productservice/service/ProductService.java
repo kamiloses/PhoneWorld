@@ -3,7 +3,9 @@ package com.kamiloses.productservice.service;
 import com.kamiloses.productservice.dto.ProductDto;
 import com.kamiloses.productservice.dto.ResponseProductInfo;
 import com.kamiloses.productservice.exception.ProductNotFoundException;
+import com.kamiloses.productservice.rabbit.RabbitMQProducer;
 import com.kamiloses.productservice.repository.ProductRepository;
+import jakarta.ws.rs.InternalServerErrorException;
 import org.springframework.stereotype.Service;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
@@ -16,6 +18,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final Mapper mapper;
+
+    private Double totalProductsPrice=0.0;
 
     public ProductService(ProductRepository productRepository, Mapper mapper) {
         this.productRepository = productRepository;
@@ -45,11 +49,16 @@ public class ProductService {
                                     responseProductInfo.setProductName(productInfo.getProductName());
                                     responseProductInfo.setQuantity(productInfo.getQuantity());
                                     responseProductInfo.setPricePerUnit(phone.getPrice());
-                                    System.err.println(productInfo.getProductName());
-                                    System.err.println(productInfo.getQuantity());
-                                    System.err.println(phone.getPrice());
+                                            System.out.println("jest"+responseProductInfo);
+                                   totalProductsPrice+=phone.getPrice()*productInfo.getQuantity();
+                                            System.out.println(totalProductsPrice +"oraz mój portfel" +responseProductInfo.getUserAccountBalance());
+//                                    if (totalProductsPrice>responseProductInfo.getUserAccountBalance()) {
+//                                        throw new InternalServerErrorException("popraw to potem");//todo zamień
+//                                    }
                                     return Mono.just(responseProductInfo);
-                                })
+                                }
+
+                                )
                 )
                 .collectList();
 

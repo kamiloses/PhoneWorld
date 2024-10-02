@@ -11,4 +11,5 @@ public class ResponseInventoryInfo {
     private String productName;
     private Integer productQuantity;
 
+
 }

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String QUEUE_ORDER_TO_USER = "order.user.request";
-    public static final String QUEUE_USER_TO_ORDER = "user.order.request";
+    public static final String QUEUE_USER_TO_ORDER = "user.order.response";
 
 
     public static final String QUEUE_ORDER_TO_PRODUCT = "order.product.request";
@@ -79,11 +79,11 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding bindingOrderToUser() {
-        return BindingBuilder.bind(queueInventoryToOrder()).to(exchangeMakingOrder()).with(ROUTING_KEY_ORDER_TO_USER);
+        return BindingBuilder.bind(queueOrderToUser()).to(exchangeMakingOrder()).with(ROUTING_KEY_ORDER_TO_USER);
     }
     @Bean
     public Binding bindingUserToOrder() {
-        return BindingBuilder.bind(queueInventoryToOrder()).to(exchangeMakingOrder()).with(ROUTING_KEY_USER_TO_ORDER);
+        return BindingBuilder.bind(queueUserToOrder()).to(exchangeMakingOrder()).with(ROUTING_KEY_USER_TO_ORDER);
     }
 
 

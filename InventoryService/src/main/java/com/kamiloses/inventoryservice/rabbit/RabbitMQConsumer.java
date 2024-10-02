@@ -24,7 +24,6 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE_PRODUCT_TO_INVENTORY)
     public void receiveMessage(List<ResponseInventoryInfo> responseInventoryInfo) {
-        System.err.println("abcdxx"+responseInventoryInfo);
      inventoryService.responseIfProductAvailable(responseInventoryInfo).subscribe();
     }
 }

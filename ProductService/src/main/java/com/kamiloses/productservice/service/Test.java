@@ -1,4 +1,4 @@
-//package com.kamiloses.productservice.service;
+package com.kamiloses.productservice.service;//package com.kamiloses.productservice.service;
 //
 //import com.kamiloses.productservice.entity.Product;
 //import com.kamiloses.productservice.repository.ProductRepository;

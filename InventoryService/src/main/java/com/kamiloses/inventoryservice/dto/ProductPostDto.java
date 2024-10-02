@@ -1,4 +1,4 @@
-//package com.kamiloses.inventoryservice.dto;
+package com.kamiloses.inventoryservice.dto;//package com.kamiloses.inventoryservice.dto;
 //
 //import lombok.AllArgsConstructor;
 //import lombok.Data;

@@ -6,9 +6,11 @@ import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -26,16 +28,17 @@ public class RabbitMQProducer {
     }
 
 
-    public void sendMessageToInventory(List<ResponseInventoryInfo> responseForInventoryDetails) {
-        System.out.println("lista "+responseForInventoryDetails);
-        ResponseInventoryInfo responseInventoryInfo = new ResponseInventoryInfo();
-        responseInventoryInfo.setProductId("100");
-        responseInventoryInfo.setProductName("Smartphone X");
-        responseInventoryInfo.setProductQuantity(1);
-
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_MAKING_ORDER,
-                    RabbitMQConfig.ROUTING_KEY_PRODUCT_TO_INVENTORY,
-                    responseInventoryInfo);
-
+    public void sendMessageToInventory(Flux<ResponseInventoryInfo> responseForInventoryDetails) {
+        responseForInventoryDetails
+                .collectList()
+                .flatMap(responseInventoryInfoList -> {
+                    rabbitTemplate.convertAndSend(
+                            RabbitMQConfig.EXCHANGE_MAKING_ORDER,
+                            RabbitMQConfig.ROUTING_KEY_PRODUCT_TO_INVENTORY,
+                            responseInventoryInfoList
+                    );
+                    return Mono.empty();
+                })
+                .subscribe();
     }
 }

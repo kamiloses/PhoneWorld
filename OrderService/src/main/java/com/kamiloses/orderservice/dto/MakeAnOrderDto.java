@@ -12,6 +12,4 @@ public class MakeAnOrderDto {
     private List<OrderItemDto> orderItems;
 
 
-
-
 }
