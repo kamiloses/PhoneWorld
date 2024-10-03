@@ -20,6 +20,7 @@ public class ProductService {
     private final Mapper mapper;
 
     private Double totalProductsPrice=0.0;
+    private Double accountBalance=100000.00;
 
     public ProductService(ProductRepository productRepository, Mapper mapper) {
         this.productRepository = productRepository;
@@ -28,16 +29,9 @@ public class ProductService {
 
     public Flux<ProductDto> getAllProducts() {
         return productRepository.findAll().map(mapper::productEntityToDto);
-
     }
-
-//    public Mono<ProductDto> getProductByName(String name) {
-//        return productRepository.getProductsByName(name)
-//                .map(mapper::productEntityToDto)
-//                .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found with name: " + name)));
-//    }
-
     public Mono<List<ResponseProductInfo>> getProductPrice(List<ResponseProductInfo> responseProductInfoList) {
+      // accountBalance= responseProductInfoList.get(0).getUserAccountBalance();
         return Flux.fromIterable(responseProductInfoList)
                 .flatMap(productInfo ->
                         productRepository.getProductsByName(productInfo.getProductName())
@@ -49,19 +43,33 @@ public class ProductService {
                                     responseProductInfo.setProductName(productInfo.getProductName());
                                     responseProductInfo.setQuantity(productInfo.getQuantity());
                                     responseProductInfo.setPricePerUnit(phone.getPrice());
-                                            System.out.println("jest"+responseProductInfo);
                                    totalProductsPrice+=phone.getPrice()*productInfo.getQuantity();
-                                            System.out.println(totalProductsPrice +"oraz mój portfel" +responseProductInfo.getUserAccountBalance());
 //                                    if (totalProductsPrice>responseProductInfo.getUserAccountBalance()) {
 //                                        throw new InternalServerErrorException("popraw to potem");//todo zamień
 //                                    }
+                                            accountBalance-=totalProductsPrice;
+                                            totalProductsPrice=0.0;
                                     return Mono.just(responseProductInfo);
                                 }
 
                                 )
                 )
-                .collectList();
+                .collectList()
+                .doFinally(signalType ->{
+                    System.out.println("Łączna kwota wydana "+ totalProductsPrice+ " oraz ile posiadam :"+accountBalance);
+                    });
 
 
     }
+
+
+
+
+
+//    public Mono<ProductDto> getProductByName(String name) {
+//        return productRepository.getProductsByName(name)
+//                .map(mapper::productEntityToDto)
+//                .switchIfEmpty(Mono.error(new ProductNotFoundException("Product not found with name: " + name)));
+//    }
+
 }

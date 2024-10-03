@@ -1,5 +1,7 @@
 package com.kamiloses.orderservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kamiloses.orderservice.dto.MakeAnOrderDto;
 import com.kamiloses.orderservice.dto.ResponseProductInfo;
 import com.kamiloses.orderservice.entity.Order;
@@ -7,7 +9,6 @@ import com.kamiloses.orderservice.rabbit.RabbitMQConsumer;
 import com.kamiloses.orderservice.rabbit.RabbitMQProducer;
 import com.kamiloses.orderservice.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -29,24 +30,33 @@ public class OrderService {
     }
 
 
-    public Mono<Void> makeAnOrder(MakeAnOrderDto makeAnOrderDto) {
-        Double accountBalance = RestClient.create().get().uri("http://host.docker.internal:8083").retrieve().body(double.class);
-        System.out.println("test "+accountBalance);
-        //fetching accountBalance from userService
+    public Mono<Void> makeAnOrder(MakeAnOrderDto makeAnOrderDto)  {
 
-        List<ResponseProductInfo> requestForProductPrice = mapper.OrderItemDtoToResponseProductInfo(makeAnOrderDto.getOrderItems(), accountBalance);
+        rabbitMQProducer.sendMessageToUserService();
+       // fetching accountBalance from userService
 
-        rabbitMQProducer.sendMessageToProductService(requestForProductPrice);
-        List<ResponseProductInfo> responseFromProductService = rabbitMQConsumer.getModifiedResponseFromProductService();
-        //request and response about product price
-
-        Order order = mapper.makeAnOrderDtoToOrder(makeAnOrderDto);
-        System.err.println("Wynik" + responseFromProductService);
-        order.setOrderItems(mapper.responseProductInfoToOrderItem(responseFromProductService));
-        System.out.println("Wynik" + order);
+     List<ResponseProductInfo> requestToProductService = mapper.OrderItemDtoToResponseProductInfo(makeAnOrderDto.getOrderItems(),rabbitMQProducer.getUserDetails().getAccountBalance());
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String  mappedRequestToProductService  = objectMapper.writeValueAsString(requestToProductService);
+            rabbitMQProducer.sendMessageToProductService(mappedRequestToProductService);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }//request to productService to ensure if user's account balance is enough to buy the products
 
 
-        return orderRepository.save(order).then();
+
+
+//        List<ResponseProductInfo> responseFromProductService = rabbitMQConsumer.getModifiedResponseFromProductService();
+  //        request and response about product price
+//
+//        Order order = mapper.makeAnOrderDtoToOrder(makeAnOrderDto);
+//        System.err.println("Wynik" + responseFromProductService);
+//        order.setOrderItems(mapper.responseProductInfoToOrderItem(responseFromProductService));
+//        System.out.println("Wynik" + order);
+
+        return Mono.empty();
+       // return orderRepository.save(order).then();
 
     }
 

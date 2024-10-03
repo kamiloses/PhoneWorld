@@ -9,6 +9,8 @@ import com.kamiloses.inventoryservice.entity.InventoryEvent;
 import com.kamiloses.inventoryservice.repository.InventoryEventRepository;
 import com.kamiloses.inventoryservice.repository.InventoryRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.ws.rs.InternalServerErrorException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -18,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 
+@Slf4j
 @Service
 public class InventoryEventService {
     private final InventoryEventRepository inventoryEventRepository;
@@ -37,21 +40,9 @@ public class InventoryEventService {
     }
 
 
-//    public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEventDto) {
-//        //    Mono<Inventory> abc = findInventoryByName("abc");
-//        InventoryEvent event = new InventoryEvent();
-//        event.setInventory(findInventoryByName(inventoryEventDto.getInventoryName()).block());
-//        event.setEventTime(new Date().toString()); //todo zamień
-//        event.setEventType(EventType.DELIVERED);
-//        //   event.setQuantity(findInventoryByName(inventoryEventDto.getInventoryName()).block().getAvailableQuantity()+inventoryEventDto.getQuantityChange());
-//        event.setDescription(inventoryEventDto.getDescription());
-//        event.setSupplier(supplierService.setSupplierRelatedWithEvent());
-//        inventoryEventRepository.save(event).subscribe();
-//        return Mono.just(event);}
 public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEventDto) {
     return findInventoryByName(inventoryEventDto.getInventoryName())
             .flatMap(inventory -> {
-                System.out.println("zapisało1"+inventory);
 
                 InventoryEvent inventoryEvent = new InventoryEvent();
                 inventoryEvent.setInventory(inventory);
@@ -60,16 +51,13 @@ public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEvent
                 inventoryEvent.setQuantity(inventoryEventDto.getQuantityChange());
                 inventoryEvent.setDescription(inventoryEventDto.getDescription());
                 inventoryEvent.setSupplier(supplierService.setSupplierRelatedWithEvent());
-                System.out.println("zapisało2"+inventory);
 
                 inventory.setAvailableQuantity(inventoryEventDto.getQuantityChange()+inventoryEvent.getQuantity());
-                inventoryRepository.save(inventory).subscribe();
-                return inventoryEventRepository.save(inventoryEvent)
+           return      inventoryRepository.save(inventory)
+                        .then(inventoryEventRepository.save(inventoryEvent))
                         .thenReturn(inventoryEvent);
             })
-            .doOnError(error -> {
-                System.out.println("Error occurred: " + error.getMessage());
-            });
+            .onErrorResume(error -> Mono.error(new InternalServerErrorException("Operation failed")));
 }
 
 

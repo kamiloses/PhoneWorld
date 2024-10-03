@@ -28,7 +28,7 @@ public class InventoryService {
                                         "Product: " + product.getProductName() + " is currently not available"));
                             }
                             inventory.setAvailableQuantity(inventory.getAvailableQuantity() - product.getProductQuantity());
-                            System.out.println(inventory.getAvailableQuantity());
+                            System.out.println("produkt"+product.getProductName()+" "+inventory.getAvailableQuantity());
                             return Mono.just(inventory);
                         })
                 )

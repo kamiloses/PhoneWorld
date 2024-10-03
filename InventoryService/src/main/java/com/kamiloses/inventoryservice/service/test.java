@@ -1,4 +1,4 @@
-package com.kamiloses.inventoryservice.service;//package com.kamiloses.inventoryservice.service;
+//package com.kamiloses.inventoryservice.service;//package com.kamiloses.inventoryservice.service;
 //
 //import com.kamiloses.inventoryservice.entity.Inventory;
 //import com.kamiloses.inventoryservice.entity.InventoryEvent;
@@ -11,6 +11,7 @@ package com.kamiloses.inventoryservice.service;//package com.kamiloses.inventory
 //import org.springframework.stereotype.Service;
 //
 //import java.time.LocalDateTime;
+//
 //@Service
 //public class test {
 //    @Autowired
@@ -39,33 +40,28 @@ package com.kamiloses.inventoryservice.service;//package com.kamiloses.inventory
 //        product.setStorageCapacity(128);
 //        product.setPrice(699.99);
 //
-//        // Zapisanie produktu
-//        productRepository.save(product).block();
+//        inventoryRepository.save(product).block();
 //
-//        // Tworzenie obiektu Inventory
+//
 //        Inventory inventory = new Inventory();
 //        inventory.setId("1");
 //        inventory.setAvailableQuantity(100);
-//        inventory.setReservedQuantity(20);
 //        inventory.setSoldQuantity(30);
-//        inventory.setProduct(product); // Ustalanie referencji do produktu
+//        inventory.setProduct(product);
 //
-//        // Zapisanie inwentarza
 //        inventoryRepository.save(inventory).block();
 //
-//        // Tworzenie obiektu InventoryEvent
+//
 //        InventoryEvent inventoryEvent = new InventoryEvent();
-//        inventoryEvent.setId("1");
-//        inventoryEvent.setInventory(inventory); // Ustalanie referencji do inwentarza
+//        inventoryEvent.setInventory(inventory);
 //        inventoryEvent.setEventTime(LocalDateTime.now());
 //        inventoryEvent.setEventType("ADD");
 //        inventoryEvent.setQuantityChange(50);
 //        inventoryEvent.setDescription("Added 50 units to inventory.");
 //
-//        // Zapisanie zdarzenia inwentarza
+//        //    Zapisanie zdarzenia inwentarza
 //        inventoryEventRepository.save(inventoryEvent).block();
 //    }
-//
 //
 //
 //}

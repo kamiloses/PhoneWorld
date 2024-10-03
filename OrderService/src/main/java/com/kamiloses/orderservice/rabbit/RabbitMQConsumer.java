@@ -23,7 +23,6 @@ public class RabbitMQConsumer {
     }
 
     public List<ResponseProductInfo> getModifiedResponseFromProductService() {
-        System.out.println(responseProductInfoList);
         return responseProductInfoList;
     }
 
