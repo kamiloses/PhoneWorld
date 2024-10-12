@@ -3,7 +3,6 @@ package com.kamiloses.inventoryservice.service;
 import com.kamiloses.inventoryservice.EventType;
 import com.kamiloses.inventoryservice.dto.InventoryEventDto;
 import com.kamiloses.inventoryservice.dto.ProductGetDto;
-import com.kamiloses.inventoryservice.dto.ResponseInventoryInfo;
 import com.kamiloses.inventoryservice.entity.Inventory;
 import com.kamiloses.inventoryservice.entity.InventoryEvent;
 import com.kamiloses.inventoryservice.repository.InventoryEventRepository;
@@ -13,11 +12,9 @@ import jakarta.ws.rs.InternalServerErrorException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
-import java.util.List;
 
 
 @Slf4j

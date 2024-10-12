@@ -1,6 +1,5 @@
 package com.kamiloses.userservice;
 
-import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 

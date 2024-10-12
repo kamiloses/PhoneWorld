@@ -3,7 +3,7 @@ package com.kamiloses.orderservice.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kamiloses.orderservice.dto.MakeAnOrderDto;
-import com.kamiloses.orderservice.dto.ResponseProductInfo;
+import com.kamiloses.orderservice.dto.FullOrderDetailsDto;
 import com.kamiloses.orderservice.entity.Order;
 import com.kamiloses.orderservice.rabbit.RabbitMQConsumer;
 import com.kamiloses.orderservice.rabbit.RabbitMQProducer;
@@ -34,8 +34,10 @@ public class OrderService {
 
         rabbitMQProducer.sendMessageToUserService();
        // fetching accountBalance from userService
+        System.err.println("userDetails"+rabbitMQProducer.getUserDetails());
 
-     List<ResponseProductInfo> requestToProductService = mapper.OrderItemDtoToResponseProductInfo(makeAnOrderDto.getOrderItems(),rabbitMQProducer.getUserDetails().getAccountBalance());
+
+     List<FullOrderDetailsDto> requestToProductService = mapper.OrderItemDtoToResponseProductInfo(makeAnOrderDto.getOrderItems(),rabbitMQProducer.getUserDetails().getAccountBalance());
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String  mappedRequestToProductService  = objectMapper.writeValueAsString(requestToProductService);
@@ -43,7 +45,6 @@ public class OrderService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }//request to productService to ensure if user's account balance is enough to buy the products
-
 
 
 

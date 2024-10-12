@@ -2,7 +2,7 @@ package com.kamiloses.orderservice.service;
 
 import com.kamiloses.orderservice.dto.MakeAnOrderDto;
 import com.kamiloses.orderservice.dto.OrderItemDto;
-import com.kamiloses.orderservice.dto.ResponseProductInfo;
+import com.kamiloses.orderservice.dto.FullOrderDetailsDto;
 import com.kamiloses.orderservice.entity.Order;
 import com.kamiloses.orderservice.entity.OrderItem;
 import com.kamiloses.orderservice.entity.OrderStatus;
@@ -32,9 +32,9 @@ public class Mapper {
         }).toList();
     }
 
-    List<ResponseProductInfo> OrderItemDtoToResponseProductInfo(List<OrderItemDto> orderItemDto, Double userAccountBalance) {
+    List<FullOrderDetailsDto> OrderItemDtoToResponseProductInfo(List<OrderItemDto> orderItemDto, Double userAccountBalance) {
         return orderItemDto.stream().map(order -> {
-            ResponseProductInfo responseProduct = new ResponseProductInfo();
+            FullOrderDetailsDto responseProduct = new FullOrderDetailsDto();
             responseProduct.setProductName(order.getProductName());
             responseProduct.setQuantity(order.getQuantity());
             responseProduct.setPricePerUnit(null);
@@ -44,8 +44,8 @@ public class Mapper {
 
     }
 
-    List<OrderItem> responseProductInfoToOrderItem(List<ResponseProductInfo> responseProductInfoList) {
-        return responseProductInfoList.stream().map(item -> {
+    List<OrderItem> responseProductInfoToOrderItem(List<FullOrderDetailsDto> fullOrderDetailsDtoList) {
+        return fullOrderDetailsDtoList.stream().map(item -> {
             OrderItem orderItem = new OrderItem();
             orderItem.setProductName(item.getProductName());
             orderItem.setQuantity(1000);

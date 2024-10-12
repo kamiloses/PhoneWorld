@@ -1,6 +1,6 @@
 package com.kamiloses.inventoryservice.rabbit;
 
-import com.kamiloses.inventoryservice.dto.ResponseInventoryInfo;
+import com.kamiloses.inventoryservice.dto.FullOrderDetailsDto;
 import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -20,7 +20,7 @@ public class RabbitMQProducer {
     }
 
 
-    public Mono<Void> sendMessageToOrder(Mono<List<ResponseInventoryInfo>> responseForInventoryDetails) {
+    public Mono<Void> sendMessageToOrder(Mono<List<FullOrderDetailsDto>> responseForInventoryDetails) {
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_MAKING_ORDER, RabbitMQConfig.ROUTING_KEY_PRODUCT_TO_INVENTORY, responseForInventoryDetails);
         return Mono.empty();
     }

@@ -1,6 +1,6 @@
 package com.kamiloses.orderservice.rabbit;
 
-import com.kamiloses.orderservice.dto.ResponseProductInfo;
+import com.kamiloses.orderservice.dto.FullOrderDetailsDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
@@ -12,18 +12,18 @@ import java.util.List;
 public class RabbitMQConsumer {
 
 
-    private List<ResponseProductInfo> responseProductInfoList;
+    private List<FullOrderDetailsDto> fullOrderDetailsDtoList;
     private String accountBalance;
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE_PRODUCT_TO_ORDER)
-    public void receiveMessage(List<ResponseProductInfo> responseProductInfoList) {
-        log.info("Received message from product service: {}", responseProductInfoList);
-        System.err.println(responseProductInfoList);
-        this.responseProductInfoList = responseProductInfoList;
+    public void receiveMessage(List<FullOrderDetailsDto> fullOrderDetailsDtoList) {
+        log.info("Received message from product service: {}", fullOrderDetailsDtoList);
+        System.err.println(fullOrderDetailsDtoList);
+        this.fullOrderDetailsDtoList = fullOrderDetailsDtoList;
     }
 
-    public List<ResponseProductInfo> getModifiedResponseFromProductService() {
-        return responseProductInfoList;
+    public List<FullOrderDetailsDto> getModifiedResponseFromProductService() {
+        return fullOrderDetailsDtoList;
     }
 
 

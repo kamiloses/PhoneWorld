@@ -3,7 +3,7 @@ package com.kamiloses.productservice.rabbit;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kamiloses.productservice.dto.ResponseProductInfo;
+import com.kamiloses.productservice.dto.FullOrderDetailsDto;
 import com.kamiloses.productservice.service.Mapper;
 import com.kamiloses.productservice.service.ProductService;
 import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
@@ -33,8 +33,8 @@ public class RabbitProductListener {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-        List<ResponseProductInfo>     productInfoList = objectMapper.readValue(requestFromOrderService, new TypeReference<List<ResponseProductInfo>>() {});
-            List<ResponseProductInfo> products = productService.getProductPrice(productInfoList).block();
+        List<FullOrderDetailsDto>     productInfoList = objectMapper.readValue(requestFromOrderService, new TypeReference<List<FullOrderDetailsDto>>() {});
+            List<FullOrderDetailsDto> products = productService.getProductPrice(productInfoList).block();
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

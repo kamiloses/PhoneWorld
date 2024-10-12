@@ -1,6 +1,6 @@
 package com.kamiloses.inventoryservice.service;
 
-import com.kamiloses.inventoryservice.dto.ResponseInventoryInfo;
+import com.kamiloses.inventoryservice.dto.FullOrderDetailsDto;
 import com.kamiloses.inventoryservice.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -16,18 +16,18 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public Mono<Void> responseIfProductAvailable(List<ResponseInventoryInfo> responseInventoryInfoList) {
-        for (ResponseInventoryInfo responseInventoryInfo : responseInventoryInfoList) {
-            System.out.println("response"+responseInventoryInfo);
+    public Mono<Void> responseIfProductAvailable(List<FullOrderDetailsDto> fullOrderDetailsDtoList) {
+        for (FullOrderDetailsDto fullOrderDetailsDto : fullOrderDetailsDtoList) {
+            System.out.println("response"+ fullOrderDetailsDto);
         }
-        return Flux.fromIterable(responseInventoryInfoList)
+        return Flux.fromIterable(fullOrderDetailsDtoList)
                 .flatMap(product -> inventoryRepository.findByProductId(product.getProductId())
                         .flatMap(inventory -> {
-                            if (product.getProductQuantity() > inventory.getAvailableQuantity()) {
+                            if (product.getQuantity() > inventory.getAvailableQuantity()) {//todo zamień na inventory.getAvailable
                                 return Mono.error(new ProductUnavailableException(
                                         "Product: " + product.getProductName() + " is currently not available"));
                             }
-                            inventory.setAvailableQuantity(inventory.getAvailableQuantity() - product.getProductQuantity());
+                            inventory.setAvailableQuantity(inventory.getAvailableQuantity() - product.getQuantity());
                             System.out.println("produkt"+product.getProductName()+" "+inventory.getAvailableQuantity());
                             return Mono.just(inventory);
                         })

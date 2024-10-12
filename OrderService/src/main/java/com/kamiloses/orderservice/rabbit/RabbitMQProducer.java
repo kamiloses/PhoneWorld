@@ -2,14 +2,10 @@ package com.kamiloses.orderservice.rabbit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kamiloses.orderservice.dto.ResponseProductInfo;
 import com.kamiloses.orderservice.dto.UserDto;
 import lombok.Getter;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.ListenerExecutionFailedException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Getter
