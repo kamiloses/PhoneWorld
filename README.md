@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/aaea8525-2051-4ce9-9a08-166a06f7fb88)
+![image](https://github.com/user-attachments/assets/8d2c3116-8ba5-492b-9539-8a1dbff075af)
+
 
 
 The main purpose of the application was to combine WebFlux with RabbitMQ and to check whether a Java agent can recognize connections between microservices through RabbitMQ as one trace. Initially, I used Micrometer with Zipkin, but unfortunately, Micrometer did not recognize RabbitMQ connections as one trace.
