@@ -4,7 +4,7 @@ zipkin showed few seperate traces.
 
 
 I did one request that is responsible for making an order.
-![image](https://github.com/user-attachments/assets/dc93c20a-02b2-49d6-94c5-a7d816cfc7f3)
+![image](https://github.com/user-attachments/assets/85c16e50-adf8-4986-be5f-877cf7a6b699)
 
 
 
