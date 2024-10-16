@@ -22,7 +22,7 @@ public class Order {
 
     private OrderStatus status;
 
-    private LocalDateTime createdAt; //data złozenia zamówienia
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt; // aktualizacja statusu zamówienia
+    private LocalDateTime updatedAt;
 }

@@ -3,9 +3,10 @@ package com.kamiloses.productservice.config;
 import com.kamiloses.productservice.entity.Product;
 import com.kamiloses.productservice.repository.ProductRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public class ProductListInitializer {
 
 private final ProductRepository productRepository;

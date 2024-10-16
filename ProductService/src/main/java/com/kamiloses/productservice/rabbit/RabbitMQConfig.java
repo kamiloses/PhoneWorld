@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
+
+    //todo usuń zbędne kolejki
     public static final String QUEUE_ORDER_TO_USER = "order.user.request";
     public static final String QUEUE_USER_TO_ORDER = "user.order.response";
 

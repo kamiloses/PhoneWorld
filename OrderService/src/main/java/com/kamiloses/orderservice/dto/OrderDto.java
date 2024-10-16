@@ -16,7 +16,7 @@ public class OrderDto {
 
     private OrderStatus status;
 
-    private LocalDateTime createdAt; //data złozenia zamówienia
+    private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 }

@@ -61,14 +61,14 @@ public class OrderService {
 
     }
 
-    //   GGET /api/orders/customer/{customerId} – Pobranie zamówień klienta
+    //   GGET /api/orders/customer/{customerId} – Pobranie zamowień klienta
     public Flux<Order> getOrdersByUser(Long userId) {
 
         return orderRepository.findOrdersByCustomerId(String.valueOf(userId));
     }
 
 
-    //   PATCH /api/orders/{orderId}/status – Aktualizacja statusu zamówienia
+    //   PATCH /api/orders/{orderId}/status – Aktualizacja statusu zamowienia
     public void updateOrderStatus(Long orderId) {
         Mono<Boolean> booleanMono = orderRepository.existsById(String.valueOf(orderId.toString()));
 
