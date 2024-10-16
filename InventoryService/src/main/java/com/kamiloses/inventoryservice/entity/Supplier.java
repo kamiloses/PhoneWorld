@@ -11,12 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Supplier {
 
-    //todo dodaj role supplier
+
     @Id
     private String accountId;
     private String firstName;
     private String lastName;
 
-    //@OneToMany(mappedBy = "supplier")
-    //private List<Product> products;
 }

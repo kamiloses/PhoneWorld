@@ -2,9 +2,7 @@ package com.kamiloses.productservice.rabbit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kamiloses.productservice.dto.ResponseInventoryInfo;
 import com.kamiloses.productservice.dto.FullOrderDetailsDto;
-import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

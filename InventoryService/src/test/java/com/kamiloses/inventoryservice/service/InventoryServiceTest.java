@@ -2,13 +2,13 @@ package com.kamiloses.inventoryservice.service;
 
 import com.kamiloses.inventoryservice.dto.FullOrderDetailsDto;
 import com.kamiloses.inventoryservice.entity.Inventory;
+import com.kamiloses.inventoryservice.exception.ProductUnavailableException;
 import com.kamiloses.inventoryservice.repository.InventoryRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;

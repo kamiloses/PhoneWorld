@@ -16,13 +16,11 @@ public class Inventory {
     @Id
     private String id;
 
-//    @DBRef
+
     private String productId;
 
     private Integer availableQuantity;
     private Integer soldQuantity;
 
-  //  @OneToMany(mappedBy = "inventory")
-//    @Transient
-//    private List<InventoryEvent> events;
+
 }

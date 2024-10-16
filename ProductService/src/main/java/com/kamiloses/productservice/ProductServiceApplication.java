@@ -1,7 +1,7 @@
 package com.kamiloses.productservice;
 
-import com.kamiloses.rabbitmqconfig.RabbitConverter;
-import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
+import com.kamiloses.productservice.rabbit.RabbitConverter;
+import com.kamiloses.productservice.rabbit.RabbitMQConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

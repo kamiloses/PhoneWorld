@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kamiloses.productservice.dto.FullOrderDetailsDto;
 import com.kamiloses.productservice.service.Mapper;
 import com.kamiloses.productservice.service.ProductService;
-import com.kamiloses.rabbitmqconfig.RabbitMQConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;

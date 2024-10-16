@@ -1,0 +1,93 @@
+version: '3'
+services:
+  order-service:
+    build: ./OrderService
+    environment:
+      OTEL_SERVICE_NAME: "order-service"
+      OTEL_TRACES_EXPORTER: "jaeger,logging"
+      OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
+      SPRING_DATA_MONGODB_URI: "mongodb://mongo:27017/order-service"
+
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongo
+      - jaeger-all-in-one
+
+
+
+
+  jaeger-all-in-one:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    restart: always
+    ports:
+      - "16686:16686"
+      - "14250"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./dockerConfig/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    restart: always
+    ports:
+      - '9090:9090'
+    depends_on:
+      - order-service
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+  user-service:
+    build: ./UserService
+    environment:
+      OTEL_SERVICE_NAME: "user-service"
+      OTEL_TRACES_EXPORTER: "jaeger,logging"
+      OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
+    ports:
+      - "8083:8083"
+
+  inventory-service:
+    build: ./InventoryService
+    environment:
+      OTEL_SERVICE_NAME: "inventory-service"
+      OTEL_TRACES_EXPORTER: "jaeger,logging"
+      OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
+      SPRING_DATA_MONGODB_URI: "mongodb://mongo:27017/InventoryService-PhoneWorld"
+    ports:
+      - "8081:8081"
+
+  product-service:
+    build: ./ProductService
+    environment:
+      OTEL_SERVICE_NAME: "product-service"
+      OTEL_TRACES_EXPORTER: "jaeger,logging"
+      OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
+      SPRING_DATA_MONGODB_URI: "mongodb://mongo:27017/ProductService-PhoneWorld"
+    ports:
+      - "8080:8080"
+
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: orders
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

@@ -17,7 +17,7 @@ public class InventoryRouter {
         this.inventoryEventHandler = inventoryEventHandler;
     }
 
-    @Bean//todo upewnij sie potem że te nazwy inventory event i inventory i supplier są poprawne we wszystkich serwisach
+    @Bean
     public RouterFunction<ServerResponse> routerFunction(InventoryEventHandler inventoryEventHandler) {
         return RouterFunctions.route().POST("/api/makeADeliver", inventoryEventHandler::deliverPhonesToInventory)
                 .build();

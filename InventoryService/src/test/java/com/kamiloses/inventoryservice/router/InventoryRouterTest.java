@@ -37,18 +37,6 @@ class InventoryRouterTest {
 
     }
 
-//    @BeforeEach
-//    void initProducts() {
-//        productRepository.deleteAll().block();
-//
-//        List<Product> products = List.of(
-//                new Product(null, "Smartphone A", "Manufacturer A", "Model A", "Android", 6.5, 4000, 12, 4, 64, 299.99),
-//                new Product(null, "Smartphone B", "Manufacturer B", "Model B", "iOS", 6.1, 3500, 12, 6, 128, 999.99),
-//                new Product(null, "Smartphone C", "Manufacturer C", "Model C", "Android", 6.7, 4500, 48, 8, 256, 799.99)
-//        );
-//
-//        productRepository.saveAll(products).collectList().block();
-//    }
 
 
 

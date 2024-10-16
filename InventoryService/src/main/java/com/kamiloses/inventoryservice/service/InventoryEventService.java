@@ -1,15 +1,15 @@
 package com.kamiloses.inventoryservice.service;
 
-import com.kamiloses.inventoryservice.EventType;
+import com.kamiloses.inventoryservice.entity.EventType;
 import com.kamiloses.inventoryservice.dto.InventoryEventDto;
 import com.kamiloses.inventoryservice.dto.ProductGetDto;
 import com.kamiloses.inventoryservice.entity.Inventory;
 import com.kamiloses.inventoryservice.entity.InventoryEvent;
+import com.kamiloses.inventoryservice.exception.PhoneNotFoundException;
 import com.kamiloses.inventoryservice.repository.InventoryEventRepository;
 import com.kamiloses.inventoryservice.repository.InventoryRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.ws.rs.InternalServerErrorException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -17,7 +17,6 @@ import reactor.core.publisher.Mono;
 import java.util.Date;
 
 
-@Slf4j
 @Service
 public class InventoryEventService {
     private final InventoryEventRepository inventoryEventRepository;
@@ -54,15 +53,8 @@ public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEvent
                         .then(inventoryEventRepository.save(inventoryEvent))
                         .thenReturn(inventoryEvent);
             })
-            .onErrorResume(error -> Mono.error(new InternalServerErrorException("Operation failed")));
+            .onErrorResume(error -> Mono.error(new InternalServerErrorException("Some error has occured  in 'addPhoneToWereHouse' method")));
 }
-
-
-
-
-
-
-
 
 
 
@@ -72,7 +64,7 @@ public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEvent
                 .uri("/api/products")
                 .retrieve()
                 .bodyToFlux(ProductGetDto.class)
-                .filter(product -> product.getName().equals("Smartphone X"))
+                .filter(product -> product.getName().equals(name))
                 .map(ProductGetDto::getId)
                 .single()
                 .switchIfEmpty(Mono.error(new PhoneNotFoundException("This phone was not found")))
@@ -82,7 +74,7 @@ public Mono<InventoryEvent> addPhoneToWereHouse(InventoryEventDto inventoryEvent
 
 
 
-   // private  Mono<Void> updateInventoryEvent(List<Enve>)
+
 
 
 
